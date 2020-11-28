@@ -1,21 +1,35 @@
 import React from "react";
 
 const Tasks = (props) => {
-  let { task, taskStatusHandler, index, deleteTaskHandler } = props;
+  let {
+    task,
+    taskStatusHandler,
+    index,
+    deleteTaskHandler,
+    taskChangeHandler,
+  } = props;
   let classname = task.status === "Completed" ? "completed" : "";
 
   return (
     <li className={classname}>
       <div className="form-check">
+        <input
+          className="checkbox"
+          type="checkbox"
+          onChange={() => taskStatusHandler(index)}
+          checked={task.status === "Completed" ? "checked" : ""}
+        />{" "}
         <label className="form-check-label">
-          <input
-            className="checkbox"
-            type="checkbox"
-            onChange={() => taskStatusHandler(index)}
-            checked={task.status === "Completed" ? "checked" : ""}
-          />{" "}
-          {task.taskName}
-          <i className="input-helper"></i>
+          {task.status === "Active" ? (
+            <input
+              type="text"
+              value={task.taskName}
+              className="form-control task-edit"
+              onChange={(e) => taskChangeHandler(index, e.target.value)}
+            />
+          ) : (
+            task.taskName
+          )}
         </label>
       </div>
       <button

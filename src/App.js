@@ -59,6 +59,13 @@ class App extends Component {
     this.setState({ tasks });
   };
 
+  taskChangeHandler = (taskIndex, newTaskName) => {
+    let tasks;
+    tasks = [...this.state.tasks];
+    tasks[taskIndex].taskName = newTaskName;
+    this.setState({ tasks });
+  };
+
   render() {
     let statusData = "";
     statusData = this.state.status.map((st, index) => {
@@ -85,6 +92,7 @@ class App extends Component {
           taskStatusHandler={this.taskStatusHandler}
           index={index}
           deleteTaskHandler={this.deleteTaskHandler}
+          taskChangeHandler={this.taskChangeHandler}
         />
       );
     });
@@ -92,6 +100,11 @@ class App extends Component {
     return (
       <div className="container">
         <div className="page-content page-container" id="page-content">
+          <div className="row custom-alert">
+            <div className="col-md-12">
+              <p className="float-right">Changes are being saved...</p>
+            </div>
+          </div>
           <div className="padding">
             <div className="row container d-flex justify-content-center">
               <div className="col-md-2">{this.state.tasks.length} Tasks</div>
